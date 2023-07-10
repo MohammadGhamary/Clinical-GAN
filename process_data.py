@@ -156,9 +156,9 @@ def display(pidAdmMap,admDxMap,admPxMap,admDrugMap):
     print(f" average Number of Drug code per visit {ListAvgVisit(admDrugMap)}")
 
 def load_mimic_data(mimic3_path,CCSRDX_file,CCSRPCS_file,choice ='ndc'):
-    mimic3_path = 'data'
-    CCSRDX_file = 'DXCCSR_v2021-2/DXCCSR_v2021-2.csv'
-    CCSRPCS_file = 'PRCCSR_v2021-1/PRCCSR_v2021-1.csv'
+    mimic3_path = '/content/Clinical-GAN/data'
+    CCSRDX_file = '/content/Clinical-GAN/DXCCSR_v2021-2/DXCCSR_v2021-2.csv'
+    CCSRPCS_file = '/content/Clinical-GAN/PRCCSR_v2021-1/PRCCSR_v2021-1.CSV'
     #os.path.join(mimic3_path, 'ADMISSIONS.csv')
     admissionFile = os.path.join(mimic3_path, 'ADMISSIONS.csv')
     diagnosisFile = os.path.join(mimic3_path, 'DIAGNOSES_ICD.csv')
@@ -380,9 +380,9 @@ def create_CCS_CCSR_mapping(CCSRDX_file,CCSRPCS_file,CCSDX_file,CCSPX_file):
         b[new_key] = a[key]
 
     df = pd.read_csv(CCSRPCS_file)
-    df = df[["\'ICD-10-PCS\'", "\'PRCCSR\'"]]
-    df = df.applymap(lambda x: str(x)[1:-1])
-    df = df.set_index("\'ICD-10-PCS\'").T.to_dict('list')
+    df = df[["ICD-10-PCS", "PRCCSR"]]
+    #df = df.applymap(lambda x: str(x)[1:-1])
+    df = df.set_index("ICD-10-PCS").T.to_dict('list')
 
     for key, value in df.items():
         newValue = []
@@ -1051,17 +1051,17 @@ def main(args):
     print("\n All the preprocessing step has been completed, Now use the data in the outputData folder to build the model...")
 
 
-parser.add_argument('--mimic3_path',default='data', type=str,help="Path of mimic IV CSV files where the queried data is stored")
+parser.add_argument('--mimic3_path',default='/content/Clinical-GAN/data', type=str,help="Path of mimic IV CSV files where the queried data is stored")
 
-parser.add_argument('--CCSRDX_file',default='DXCCSR_v2021-2/DXCCSR_v2021-2.csv', type=str,help="Path of diagnosis based CCSR files")
-parser.add_argument('--CCSRPCS_file',default='PRCCSR_v2021-1/PRCCSR_v2021-1.csv', type=str,help="Path of procedure based CCSR files")
+parser.add_argument('--CCSRDX_file',default='/content/Clinical-GAN/DXCCSR_v2021-2/DXCCSR_v2021-2.csv', type=str,help="Path of diagnosis based CCSR files")
+parser.add_argument('--CCSRPCS_file',default='/content/Clinical-GAN/PRCCSR_v2021-1/PRCCSR_v2021-1.CSV', type=str,help="Path of procedure based CCSR files")
 
-parser.add_argument('--D_CCSR_Ref_file',default='DXCCSR_v2021-2/DXCCSR-Reference-File-v2021-2.xlsx', type=str,help="Path of diagnosis based CCSR Reference file ")
-parser.add_argument('--P_CCSR_Ref_file',default='PRCCSR_v2021-1/PRCCSR-Reference-File-v2021-1.xlsx', type=str,help="Path of procedure based CCSR Reference file")
+parser.add_argument('--D_CCSR_Ref_file',default='/content/Clinical-GAN/DXCCSR_v2021-2/DXCCSR-Reference-File-v2021-2.xlsx', type=str,help="Path of diagnosis based CCSR Reference file ")
+parser.add_argument('--P_CCSR_Ref_file',default='/content/Clinical-GAN/PRCCSR_v2021-1/PRCCSR-Reference-File-v2021-1.xlsx', type=str,help="Path of procedure based CCSR Reference file")
 
 
-parser.add_argument('--CCSDX_file',default='Single_Level_CCS_2015/$dxref 2015.csv', type=str,help="Path of diagnosis based CCS files")
-parser.add_argument('--CCSPX_file',default='Single_Level_CCS_2015/$prref 2015.csv', type=str,help="Path of procedure based CCS files")
+parser.add_argument('--CCSDX_file',default='/content/Clinical-GAN/Single_Level_CCS_2015/$dxref 2015.csv', type=str,help="Path of diagnosis based CCS files")
+parser.add_argument('--CCSPX_file',default='/content/Clinical-GAN/Single_Level_CCS_2015/$prref 2015.csv', type=str,help="Path of procedure based CCS files")
 
 parser.add_argument('--min_dx',default=80, type=int,help="Minimum diagnosis code assigned per visit")
 parser.add_argument('--min_px',default=80, type=int,help="Minimum procedure code assigned per visit")
