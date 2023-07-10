@@ -680,7 +680,7 @@ def removeCode(newSeqs,types,threshold=5):
     return updatedSeqs,types,reverseTypes
 
 def saveFiles(updatedSeqs,types,codeDescription):
-    outFile = os.path.join('content', 'Clinical-GAN', 'outputData', 'originalData')
+    outFile = os.path.join('/content', 'Clinical-GAN', 'outputData', 'originalData')
     #save =True
     #if save:
     pickle.dump(updatedSeqs, open(outFile+'.seqs', 'wb'), -1)
@@ -1008,7 +1008,7 @@ def main(args):
     print(f"\n removing the code whose occurence is less than a certain {threshold}")
     updatedSeqs,types,reverseTypes = removeCode(newSeqs,types,threshold=threshold)
     # outFile - is a folder path in the working directory where the data is going to get stored
-    outFile = os.path.join('content', 'Clinical-GAN','outputData','originalData')
+    outFile = os.path.join('/content', 'Clinical-GAN','outputData','originalData')
     print("\n Save the data before formmating based on the task")
     saveFiles(updatedSeqs,types,codeDescription)
     codeType = generateCodeTypes(outFile,reverseTypes)
@@ -1017,9 +1017,9 @@ def main(args):
     print("\n Preparing data for Trajectory Forecasting....")
     # sequence length threshold  -mn
     newPairs = formatData(seqs,dataFormat = 'TF',mn = seqLength)
-    diagnosisOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d')
-    diagnosisProcedureOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p')
-    AllOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p_dr')
+    diagnosisOutputFile = os.path.join('/content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d')
+    diagnosisProcedureOutputFile = os.path.join('/content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p')
+    AllOutputFile = os.path.join('/content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p_dr')
 
     print(f"\n Remove certain codes from output for different data formats")
     AllUpdPair,AllOutTypes= resetIntegerOutput(updateOutput(newPairs.copy(),codeType,diagnosis=0,procedure=0,drugs =0,all =1))
@@ -1038,7 +1038,7 @@ def main(args):
 
     print("\nPreparing data for Sequential disease prediction....")
     newPairs = formatData(seqs,dataFormat = 'SDP',mn =500)
-    diagnosisOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','SDP','Inp_d_p_dr_out_d')
+    diagnosisOutputFile = os.path.join('/content', 'Clinical-GAN', 'outputData','SDP','Inp_d_p_dr_out_d')
 
     print(f"\n\n Remove certain codes from output for different data formats")
     diagnosisUpdPair,diagnosisOutTypes= resetIntegerOutput(updateOutput(newPairs.copy(),codeType,diagnosis=0,procedure=1,drugs =1,all =0))
