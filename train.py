@@ -28,7 +28,7 @@ def trainWithoutTune(config,data,checkpoint_dir=None,data_dir = None):
     isdataparallel = config["isdataparallel"]
 
     modelFileName = config["fileName"]
-    path = os.path.join("models","ClinicalGAN",modelFileName)
+    path = os.path.join('/content', 'Clinical-GAN', 'models','ClinicalGAN',modelFileName)
     dropout = config["dropout"]
     lr = config["lr"]
     gen_layers = config["gen_layers"]
