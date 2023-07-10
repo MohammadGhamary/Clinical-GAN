@@ -209,7 +209,7 @@ def trainCGAN(modelHypermaters, checkpoint_dir):
         ## validating
         # storing the last epoch model
         modelFileName1 = "Train_"+config["fileName"]
-        path1 = os.path.join("models","ClinicalGAN",modelFileName1)
+        path1 = os.path.join('/content', 'Clinical-GAN', 'models','ClinicalGAN',modelFileName1)
         torch.save({'gen_state_dict': gen.state_dict(),
         'disc_state_dict': disc.state_dict(),
         'gen_optimizer_state_dict': gen_opt.state_dict(),

@@ -119,19 +119,19 @@ def main(args):
     if torch.cuda.is_available():
         print("device name where the model is going to train: ",torch.cuda.get_device_name(device))
 
-    codeFile = os.path.join('outputData','originalData')
+    codeFile = os.path.join('/content','Clinical-GAN', 'outputData','originalData')
     codeDescription = pickle.load(open(codeFile +'.description','rb'))
     if args.task =='TF':
         print(f"\n Getting the Trajectory forecasting data..")
         if args.scenario =='S1':
-            outFile = os.path.join('outputData','TF','Inp_d_p_dr_out_d')
+            outFile = os.path.join('/content','Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d')
         elif args.scenario =='S2':
-            outFile = os.path.join('outputData','TF','Inp_d_p_dr_out_d_p')
+            outFile = os.path.join('/content','Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p')
         else:
-            outFile = os.path.join('outputData','TF','Inp_d_p_dr_out_d_p_dr')
+            outFile = os.path.join('/content','Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p_dr')
     else:
         print(f"\n Getting the sequential disease prediction data...")
-        outFile = os.path.join('outputData','SDP','Inp_d_p_dr_out_d')
+        outFile = os.path.join('/content','Clinical-GAN', 'outputData','SDP','Inp_d_p_dr_out_d')
 
     newPairs,types,reverseTypes,codeType,outTypes,reverseOutTypes = get_data(outFile)
     # get the input and output max sequence length
