@@ -421,8 +421,8 @@ def create_CCS_CCSR_mapping(CCSRDX_file,CCSRPCS_file,CCSDX_file,CCSPX_file):
         ccsTOdescription_Map['P9_'+str(tokens[1][1:-1]).strip()] = str(tokens[2][1:-1]).strip() #[1:-1] retira aspas
     dxprref_ccs_file.close()
 
-    pickle.dump(b, open('icd10DP_to_cssr_dictionary', 'wb'), -1)
-    pickle.dump(ccsTOdescription_Map, open('ccs_to_description_dictionary', 'wb'), -1)
+    pickle.dump(b, open('/content/Clinical-GAN/icd10DP_to_cssr_dictionary', 'wb'), -1)
+    pickle.dump(ccsTOdescription_Map, open('/content/Clinical-GAN/ccs_to_description_dictionary', 'wb'), -1)
     print ('Total ICD to ccs entries: ' + str(len(b)))
     print( 'Total ccs codes/descriptions: ' + str(len(ccsTOdescription_Map)))
 
@@ -680,7 +680,7 @@ def removeCode(newSeqs,types,threshold=5):
     return updatedSeqs,types,reverseTypes
 
 def saveFiles(updatedSeqs,types,codeDescription):
-    outFile = os.path.join('/content/Clinical-GAN/','outputData','originalData')
+    outFile = os.path.join('content', 'Clinical-GAN', 'outputData', 'originalData')
     #save =True
     #if save:
     pickle.dump(updatedSeqs, open(outFile+'.seqs', 'wb'), -1)
@@ -688,7 +688,7 @@ def saveFiles(updatedSeqs,types,codeDescription):
     pickle.dump(codeDescription, open(outFile+'.description', 'wb'), -1)
 
 def generateCodeTypes(outFile,reverseTypes):
-    icdTOCCS_Map = pickle.load(open('icd10DP_to_cssr_dictionary','rb'))
+    icdTOCCS_Map = pickle.load(open('/content/Clinical-GAN/icd10DP_to_cssr_dictionary','rb'))
     codeType = {}
     countD = 0
     countP=0
@@ -1008,7 +1008,7 @@ def main(args):
     print(f"\n removing the code whose occurence is less than a certain {threshold}")
     updatedSeqs,types,reverseTypes = removeCode(newSeqs,types,threshold=threshold)
     # outFile - is a folder path in the working directory where the data is going to get stored
-    outFile = os.path.join('/content/Clinical-GAN','outputData','originalData')
+    outFile = os.path.join('content', 'Clinical-GAN','outputData','originalData')
     print("\n Save the data before formmating based on the task")
     saveFiles(updatedSeqs,types,codeDescription)
     codeType = generateCodeTypes(outFile,reverseTypes)
@@ -1017,9 +1017,9 @@ def main(args):
     print("\n Preparing data for Trajectory Forecasting....")
     # sequence length threshold  -mn
     newPairs = formatData(seqs,dataFormat = 'TF',mn = seqLength)
-    diagnosisOutputFile = os.path.join('/content/Clinical-GAN','outputData','TF','Inp_d_p_dr_out_d')
-    diagnosisProcedureOutputFile = os.path.join('/content/Clinical-GAN','outputData','TF','Inp_d_p_dr_out_d_p')
-    AllOutputFile = os.path.join('/content/Clinical-GAN','outputData','TF','Inp_d_p_dr_out_d_p_dr')
+    diagnosisOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d')
+    diagnosisProcedureOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p')
+    AllOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','TF','Inp_d_p_dr_out_d_p_dr')
 
     print(f"\n Remove certain codes from output for different data formats")
     AllUpdPair,AllOutTypes= resetIntegerOutput(updateOutput(newPairs.copy(),codeType,diagnosis=0,procedure=0,drugs =0,all =1))
@@ -1038,7 +1038,7 @@ def main(args):
 
     print("\nPreparing data for Sequential disease prediction....")
     newPairs = formatData(seqs,dataFormat = 'SDP',mn =500)
-    diagnosisOutputFile = os.path.join('/content/Clinical-GAN','outputData','SDP','Inp_d_p_dr_out_d')
+    diagnosisOutputFile = os.path.join('content', 'Clinical-GAN', 'outputData','SDP','Inp_d_p_dr_out_d')
 
     print(f"\n\n Remove certain codes from output for different data formats")
     diagnosisUpdPair,diagnosisOutTypes= resetIntegerOutput(updateOutput(newPairs.copy(),codeType,diagnosis=0,procedure=1,drugs =1,all =0))
