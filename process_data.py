@@ -271,7 +271,7 @@ def updateAdmCodeList(sub_AdmID,admDxMap,admPxMap,admDrugMap):
 
 
 def map_ICD9_to_CCSR(mape):
-    icdTOCCS_Map = pickle.load(open('icd10DP_to_cssr_dictionary','rb'))
+    icdTOCCS_Map = pickle.load(open('/content/Clinical-GAN/icd10DP_to_cssr_dictionary','rb'))
     procCODEstoInternalID_map = {}
     missingCodes = []
     set_of_used_codes = set()
